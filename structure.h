@@ -3,7 +3,7 @@
 
 typedef struct TreeNode_Struct {
     char val;                         // The unqiue character of the tree node.
-    int freq;                         // The frequency of appearence of the character.
+    double freq;                         // The frequency of appearence of the character.
     struct TreeNode_Struct *left;     // Left child of the tree node.
     struct TreeNode_Struct *right;    // Right child of the tree node.
 } TreeNode;
@@ -14,7 +14,7 @@ typedef struct MinHeap_Struct {
 } MinHeap;
 
 //Initialize a new TreeNode.
-TreeNode *newTreeNode(char val, int freq); 
+TreeNode *newTreeNode(char val, double freq); 
 
 //Initialize a new MinHeap composed of TreeNode.
 MinHeap *newMinHeap();
@@ -31,4 +31,18 @@ int leftChild(int val);
 //Locate the index of the right child of an index in array.
 int rightChild(int val);
 
+// Proclate element at index n down.
+void proclateDown(MinHeap *minHeap, int val);
+
+//Push new TreeNode into the MinHeap.
+void push(MinHeap *minHeap, TreeNode *newNode);
+
+//Pop the top TreeNode of the MinHeap out.
+TreeNode *pop(MinHeap *minHeap);
+
+//Return the top TreeNode of the MinHeap.
+TreeNode *top(MinHeap *minHeap);
+
+//Print each TreeNode of the MinHeap.
+void print(MinHeap *minHeap);
 #endif
