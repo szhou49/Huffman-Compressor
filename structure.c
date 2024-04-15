@@ -35,3 +35,9 @@ int leftChild(int val) {
 int rightChild(int val) {
     return 2 * val + 2;
 }
+
+void push(MinHeap* minHeap, TreeNode* newNode) {
+    minHeap->array[minHeap->size] = newNode;
+    minHeap->size++;
+    // heapify(minHeap, minHeap->size);
+}
