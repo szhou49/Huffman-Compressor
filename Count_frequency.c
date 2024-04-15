@@ -7,13 +7,9 @@
 #define ASCII_MAX 256
 #define BUFFER_SIZE 4096
 
-typedef struct ListElement {
-    int ch;
-    int freq;
-} ListElement;
+int HEAP_SIZE = 0;
 
-
-ListElement* countFrequency(char* fileName) {
+MinHeap* countFrequency(char* fileName) {
     FILE* file;
     char ch;
 
@@ -43,15 +39,11 @@ ListElement* countFrequency(char* fileName) {
 
     char buffer[BUFFER_SIZE] = {0};
 
-    // Store the char-frequency struct 
-    int charSize = 0;
-    
-
     // Write the result to the file
     for (int i = 0; i < ASCII_MAX; i++) {
         if (occurrences[i] > 0) {
             snprintf(buffer, sizeof(buffer), "\n%c : %d", i, occurrences[i]);
-            charSize++;
+            HEAP_SIZE++;
         }
         int status = fputs(buffer, result);
         if (status == EOF) {
@@ -62,24 +54,26 @@ ListElement* countFrequency(char* fileName) {
     }
     fclose(result);
 
-    struct ListElement* frequencyList = malloc((charSize)*sizeof(struct ListElement));
+    MinHeap* minheap = newMinHeap(HEAP_SIZE);
 
     int index = 0;
     // Add the char-freq pair into the list
     for (int i = 0; i < ASCII_MAX; i++) {
         if (occurrences[i] > 0) {
-            frequencyList[index].ch = i;
-            frequencyList[index++].freq = occurrences[i];
+            TreeNode* newNode = newTreeNode(i, occurrences[i]);
+            push(minheap, newNode);
         }
     }
 
-
-    return frequencyList;
+    return minheap;
 }
 
 int main(void) {
     
-    ListElement* frequencyTable = countFrequency("Original_text.txt");
-    
+    MinHeap* frequencyTable = countFrequency("Original_text.txt");
+
+    for (int i = 0; i < HEAP_SIZE; i++) {
+        printf("%c : %d\n", frequencyTable->array[i]->val, frequencyTable->array[i]->freq);
+    }
     return 0;
 }
