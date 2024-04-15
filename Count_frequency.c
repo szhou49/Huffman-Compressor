@@ -5,7 +5,14 @@
 #define ASCII_MAX 256
 #define BUFFER_SIZE 4096
 
-int readInput(char* fileName) {
+typedef struct ListElement {
+    int ch;
+    int freq;
+} ListElement;
+
+int size;
+
+ListElement* countFrequency(char* fileName) {
     FILE* file;
     char ch;
 
@@ -35,32 +42,48 @@ int readInput(char* fileName) {
 
     char buffer[BUFFER_SIZE] = {0};
 
-    // Used to count the total number of character kinds
+    // Store the char-frequency struct 
     int charSize = 0;
+    
 
     // Write the result to the file
     for (int i = 0; i < ASCII_MAX; i++) {
         if (occurrences[i] > 0) {
-            printf("\n%c : %d", i, occurrences[i]);
             snprintf(buffer, sizeof(buffer), "\n%c : %d", i, occurrences[i]);
             charSize++;
         }
         int status = fputs(buffer, result);
         if (status == EOF) {
             printf("Reaching the end of the file");
-            return charSize;
+            exit(EXIT_FAILURE);
         }
         memset(buffer, '\0', sizeof(buffer));
     }
-
     fclose(result);
 
-    return charSize;
+    size = charSize;
 
+    struct ListElement* frequencyList = malloc((charSize)*sizeof(struct ListElement));
+
+    int index = 0;
+    // Add the char-freq pair into the list
+    for (int i = 0; i < ASCII_MAX; i++) {
+        if (occurrences[i] > 0) {
+            frequencyList[index].ch = i;
+            frequencyList[index++].freq = occurrences[i];
+        }
+    }
+
+
+    return frequencyList;
 }
 
 int main(void) {
     
-    int nodeNumber = readInput("Original_text.txt");
+    ListElement* frequencyTable = countFrequency("Original_text.txt");
+    for (int i = 0; i < size; i++) {
+        printf("%c : %d\n", frequencyTable[i].ch, frequencyTable[i].freq);
+    }
+    
     return 0;
 }
