@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "structure.c"
+#include "structure.h"
 
 #define ASCII_MAX 256
 #define BUFFER_SIZE 4096
