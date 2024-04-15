@@ -10,7 +10,6 @@ typedef struct ListElement {
     int freq;
 } ListElement;
 
-int size;
 
 ListElement* countFrequency(char* fileName) {
     FILE* file;
@@ -61,8 +60,6 @@ ListElement* countFrequency(char* fileName) {
     }
     fclose(result);
 
-    size = charSize;
-
     struct ListElement* frequencyList = malloc((charSize)*sizeof(struct ListElement));
 
     int index = 0;
@@ -81,9 +78,6 @@ ListElement* countFrequency(char* fileName) {
 int main(void) {
     
     ListElement* frequencyTable = countFrequency("Original_text.txt");
-    for (int i = 0; i < size; i++) {
-        printf("%c : %d\n", frequencyTable[i].ch, frequencyTable[i].freq);
-    }
     
     return 0;
 }
