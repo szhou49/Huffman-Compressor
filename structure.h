@@ -3,7 +3,7 @@
 
 typedef struct TreeNode_Struct {
     char val;                         // The unqiue character of the tree node.
-    double freq;                         // The frequency of appearence of the character.
+    int freq;                         // The frequency of appearence of the character.
     struct TreeNode_Struct *left;     // Left child of the tree node.
     struct TreeNode_Struct *right;    // Right child of the tree node.
 } TreeNode;
@@ -14,7 +14,7 @@ typedef struct MinHeap_Struct {
 } MinHeap;
 
 //Initialize a new TreeNode.
-TreeNode *newTreeNode(char val, double freq); 
+TreeNode *newTreeNode(char val, int freq); 
 
 //Initialize a new MinHeap composed of TreeNode.
 MinHeap *newMinHeap();
@@ -45,4 +45,7 @@ TreeNode *top(MinHeap *minHeap);
 
 //Print each TreeNode of the MinHeap.
 void print(MinHeap *minHeap);
+
+//Create a frequency table of characters from a text.
+MinHeap* countFrequency(char* fileName);
 #endif

@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "structure.h"
 
 int main() {
-    TreeNode *root = newTreeNode('A', 1);
-    printf("%d", root -> freq);
+    MinHeap* frequencyTable = countFrequency("Original_text.txt");
+    print(frequencyTable);
     getchar();
     return 0;
 }
