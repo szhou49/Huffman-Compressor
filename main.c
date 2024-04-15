@@ -4,5 +4,7 @@
 
 int main() {
     TreeNode *root = newTreeNode('A', 1);
+    printf("%d", root -> freq);
+    getchar();
     return 0;
 }
