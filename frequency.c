@@ -1,15 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "structure.c"
 #include "structure.h"
 
 #define ASCII_MAX 256
 #define BUFFER_SIZE 4096
 
-int HEAP_SIZE = 0;
-
 MinHeap* countFrequency(char* fileName) {
+    printf("----");
+    
     FILE* file;
     char ch;
 
@@ -32,7 +31,6 @@ MinHeap* countFrequency(char* fileName) {
     // Close the file
     fclose(file);
 
-
     // Create a new file
     FILE* result;
     result = fopen("Character_frequency.txt", "w");
@@ -43,18 +41,17 @@ MinHeap* countFrequency(char* fileName) {
     for (int i = 0; i < ASCII_MAX; i++) {
         if (occurrences[i] > 0) {
             snprintf(buffer, sizeof(buffer), "\n%c : %d", i, occurrences[i]);
-            HEAP_SIZE++;
         }
         int status = fputs(buffer, result);
         if (status == EOF) {
             printf("Reaching the end of the file");
             exit(EXIT_FAILURE);
         }
-        memset(buffer, '\0', sizeof(buffer));
+        
     }
     fclose(result);
 
-    MinHeap* minheap = newMinHeap(HEAP_SIZE);
+    MinHeap* minheap = newMinHeap();
 
     int index = 0;
     // Add the char-freq pair into the list
@@ -66,14 +63,4 @@ MinHeap* countFrequency(char* fileName) {
     }
 
     return minheap;
-}
-
-int main(void) {
-    
-    MinHeap* frequencyTable = countFrequency("Original_text.txt");
-
-    for (int i = 0; i < HEAP_SIZE; i++) {
-        printf("%c : %d\n", frequencyTable->array[i]->val, frequencyTable->array[i]->freq);
-    }
-    return 0;
 }
