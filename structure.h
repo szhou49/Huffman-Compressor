@@ -31,6 +31,9 @@ int leftChild(int val);
 //Locate the index of the right child of an index in array.
 int rightChild(int val);
 
+// Push new node into the heap
+void push(MinHeap* minHeap, TreeNode* newNode);
+
 // Proclate element at index n down.
 void proclateDown(MinHeap *minHeap, int val);
 
