@@ -148,10 +148,3 @@ MinHeap* countFrequency(char* fileName) {
     }
     return minheap;
 }
-
-int main() {
-    MinHeap* frequencyTable = countFrequency("Original_text.txt");
-    print(frequencyTable);
-    getchar();
-    return 0;
-}
