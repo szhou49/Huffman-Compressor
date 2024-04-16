@@ -34,4 +34,21 @@ int rightChild(int val);
 // Push new node into the heap
 void push(MinHeap* minHeap, TreeNode* newNode);
 
+// Proclate element at index n down.
+void proclateDown(MinHeap *minHeap, int val);
+
+//Push new TreeNode into the MinHeap.
+void push(MinHeap *minHeap, TreeNode *newNode);
+
+//Pop the top TreeNode of the MinHeap out.
+TreeNode *pop(MinHeap *minHeap);
+
+//Return the top TreeNode of the MinHeap.
+TreeNode *top(MinHeap *minHeap);
+
+//Print each TreeNode of the MinHeap.
+void print(MinHeap *minHeap);
+
+//Create a frequency table of characters from a text.
+MinHeap* countFrequency(char* fileName);
 #endif
