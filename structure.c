@@ -3,7 +3,7 @@
 #include <string.h>
 #include "structure.h"
 
-TreeNode *newTreeNode(char val, int freq) {
+extern TreeNode *newTreeNode(char val, int freq) {
     TreeNode *root = (TreeNode*)malloc(sizeof(TreeNode));
     root -> val = val;
     root -> freq = freq;
@@ -142,7 +142,8 @@ MinHeap* countFrequency(char* fileName) {
     // Add the char-freq pair into the list
     for (int i = 0; i < ASCII_MAX; i++) {
         if (occurrences[i] > 0) {
-            TreeNode* newNode = newTreeNode(i, occurrences[i]);
+            char c = i;
+            TreeNode* newNode = newTreeNode(c, occurrences[i]);
             push(minheap, newNode);
         }
     }
