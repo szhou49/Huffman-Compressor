@@ -18,7 +18,7 @@ TreeNode* buildHuffmanTree(MinHeap* minHeap) {
 }
 
 void printHuffmanTree(TreeNode* root) {
-    if (root != '\0') {
+    if (root != NULL) {
         printf("%c : %d\n", root->val, root->freq);
         printHuffmanTree(root->left);
         printHuffmanTree(root->right);
@@ -27,10 +27,8 @@ void printHuffmanTree(TreeNode* root) {
 
 // Assign Huffman codes to each tree node
 // void assignBinaryCode(TreeNode* root) {
-//     TreeNode* current = root;
-//     while (current != NULL) {
-        
-//     }
+//     if (root == '\0')
+
 // }
 
 
