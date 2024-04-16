@@ -3,7 +3,7 @@
 #include <string.h>
 #include "structure.h"
 
-extern TreeNode *newTreeNode(char val, int freq) {
+TreeNode *newTreeNode(char val, int freq) {
     TreeNode *root = (TreeNode*)malloc(sizeof(TreeNode));
     root -> val = val;
     root -> freq = freq;
