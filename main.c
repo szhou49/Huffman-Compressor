@@ -4,19 +4,18 @@
 #include "tree_building.c"
 #include "compress.c"
 
-#define FILENAME "sample-2mb-text-file.txt"
+#define TOCOMPRESS_FILENAME "Original_text.txt"
 
 MinHeap* countFrequency(char* filename);
 TreeNode* buildHuffmanTree(MinHeap* minHeap);
 void printHuffmanTree(TreeNode* root);
 char** encode(TreeNode* root);
-// void printCodes(char** encoded);
 void compress(char** encoded, char* fileName);
 
 
 int main() {
 
-    MinHeap* frequencyTable = countFrequency(FILENAME);
+    MinHeap* frequencyTable = countFrequency(TOCOMPRESS_FILENAME);
 
 
     TreeNode* huffmanTree = buildHuffmanTree(frequencyTable);
@@ -24,11 +23,8 @@ int main() {
     printHuffmanTree(huffmanTree);
 
     char** encoded = encode(huffmanTree);
-    compress(encoded, FILENAME);
-
-    // printCodes(encoded);
-
-
+    compress(encoded, TOCOMPRESS_FILENAME);
+    
 
     return 0;
 }

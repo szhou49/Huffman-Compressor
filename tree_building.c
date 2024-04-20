@@ -74,26 +74,7 @@ char** encode(TreeNode* root) {
 
 }
 
-// void printCodes(char** codes) {
-//     printf("-----------------------\n");
-//     for (int i = 0; i < 256; i++) {
-//         if (codes[i] != NULL) {
-//             printf("%c : ", (char)i);
-//             char* str = codes[i];
-//             while (*str != '\0') {
-//                 if (*str == 0) {
-//                     printf("NULL");
-//                 } else if (*str == 1) {
-//                     printf("SOH");
-//                 } else {
-//                     printf("%c", *str);
-//                 }
-//                 str++;
-//             }
-//             printf("\n");
-//         }
-//     }
-// }
+
 
 
 
