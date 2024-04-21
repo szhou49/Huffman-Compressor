@@ -60,8 +60,5 @@ void compress(char** encoded, char* fileName) {
     
 
     fclose(compressedFile);
-    printf("Compression finished");
+    printf("Compression finished\n");
 }
-
-
-

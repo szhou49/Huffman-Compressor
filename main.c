@@ -3,6 +3,7 @@
 #include "frequency.c"
 #include "tree_building.c"
 #include "compress.c"
+#include "decode.c"
 
 #define TOCOMPRESS_FILENAME "Original_text.txt"
 
@@ -11,7 +12,7 @@ TreeNode* buildHuffmanTree(MinHeap* minHeap);
 void printHuffmanTree(TreeNode* root);
 char** encode(TreeNode* root);
 void compress(char** encoded, char* fileName);
-
+void decode(char *filename);
 
 int main() {
 
@@ -24,7 +25,6 @@ int main() {
 
     char** encoded = encode(huffmanTree);
     compress(encoded, TOCOMPRESS_FILENAME);
-    
-
+    decode(TOCOMPRESS_FILENAME);
     return 0;
 }
