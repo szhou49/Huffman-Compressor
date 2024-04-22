@@ -14,9 +14,9 @@ MinHeap* countFrequency(char* filename);
 TreeNode* buildHuffmanTree(MinHeap* minHeap);
 void printHuffmanTree(TreeNode* root);
 char** encode(TreeNode* root);
-void compress(char** encoded, char* fileName);
+int compress(char** encoded, char* fileName);
 long int getFileSize(char* filename);
-void decode(char *filename, TreeNode* huffmanTree);
+void decode(char *filename, TreeNode* huffmanTree, int validBits);
 
 
 int main() {
@@ -29,14 +29,14 @@ int main() {
     printHuffmanTree(huffmanTree);
 
     char** encoded = encode(huffmanTree);
-    compress(encoded, TOCOMPRESS_FILENAME);
+    int validBits = compress(encoded, TOCOMPRESS_FILENAME);
 
     int originalSize = getFileSize(TOCOMPRESS_FILENAME);
     int compressedSize = getFileSize(COMPRESSED_FILENAME);
 
     printf("Compression ratio: %.2f%%\n", ((float)compressedSize/originalSize)*100);
 
-    decode(COMPRESSED_FILENAME, huffmanTree);
+    decode(COMPRESSED_FILENAME, huffmanTree, validBits);
 
     return 0;
 }
