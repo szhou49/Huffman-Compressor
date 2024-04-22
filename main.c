@@ -4,7 +4,7 @@
 #include "tree_building.c"
 #include "compress.c"
 #include "getFileSize.c"
-
+#include "decode.c"
 
 #define TOCOMPRESS_FILENAME "Original_text.txt"
 #define COMPRESSED_FILENAME ".compressed"
@@ -15,7 +15,7 @@ void printHuffmanTree(TreeNode* root);
 char** encode(TreeNode* root);
 void compress(char** encoded, char* fileName);
 long int getFileSize(char* filename);
-
+void decode(char *filename, TreeNode* huffmanTree);
 
 int main() {
 
@@ -33,7 +33,7 @@ int main() {
     int compressedSize = getFileSize(COMPRESSED_FILENAME);
 
     printf("Compression ratio: %.2f%%\n", ((float)compressedSize/originalSize)*100);
-
+    decode(COMPRESSED_FILENAME, huffmanTree);
 
     
 
