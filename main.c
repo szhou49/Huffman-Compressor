@@ -25,6 +25,6 @@ int main() {
 
     char** encoded = encode(huffmanTree);
     compress(encoded, TOCOMPRESS_FILENAME);
-    decode(TOCOMPRESS_FILENAME);
+    decode(".compressed");
     return 0;
 }

@@ -22,5 +22,4 @@ void decode(char *filename) {
     }
     fclose(decoded_text);
     fclose(compressedFile);
-
 }
