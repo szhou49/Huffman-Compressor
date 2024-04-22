@@ -3,7 +3,18 @@
 
 #define OUTPUT_FILENAME ".compressed"
 
-void compress(char** encoded, char* fileName) {
+char *byteToBinaryString(unsigned char byte) {
+    static char binaryString[9]; 
+    for (int i = 7; i >= 0; --i) {
+        binaryString[7 - i] = ((byte >> i) & 1) ? '1' : '0';
+    }
+    
+    binaryString[8] = '\0';
+    
+    return binaryString;
+}
+
+int compress(char** encoded, char* fileName) {
     FILE* originalFile;
     FILE* compressedFile;
     char ch;
@@ -23,8 +34,6 @@ void compress(char** encoded, char* fileName) {
 
     while (!feof(originalFile)) {
         fread((char*)&temporaryChar, sizeof(unsigned char), 1, originalFile);
-        if (temporaryChar == '\n') continue;
-        // printf("Read character: %c\n", temporaryChar);
         // Write the encoded bitstring into buffer
         strcat(codeBuffer, encoded[temporaryChar]);
 
@@ -39,28 +48,29 @@ void compress(char** encoded, char* fileName) {
             strcpy(codeBuffer, codeBuffer+8);
         }
     }
-    
-
     fclose(originalFile);
 
     // If there are left bits that are not enough to be converted to a byte
-    if (strlen(codeBuffer) > 0) {
+    int validBits = strlen(codeBuffer); 
+    if (validBits > 0) {
         unsigned char byte = 0;
-        for (int i = 0; i < strlen(codeBuffer); i++) {
+        for (int i = 0; i < validBits; i++) {
             byte <<= 1;
             if (codeBuffer[i] == '1') {
                 byte |= 1;
             }
         }
 
-        byte <<= (8 - strlen(codeBuffer));
+        byte <<= (8 - validBits);
+        // char* str = byteToBinaryString(byte);
+        // printf("%s\n", str);
         fwrite((char *)&byte, sizeof(unsigned char), 1, compressedFile);
     }
 
-    
-
     fclose(compressedFile);
-    printf("Compression finished");
+    printf("Compression finished\n");
+    // printf("%d\n", cnt);
+    return validBits;
 }
 
 
