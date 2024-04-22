@@ -34,7 +34,7 @@ int main() {
     int originalSize = getFileSize(TOCOMPRESS_FILENAME);
     int compressedSize = getFileSize(COMPRESSED_FILENAME);
 
-    printf("Compression ratio: %.2f%%\n", ((float)compressedSize/originalSize)*100);
+    // printf("Compression ratio: %.2f%%\n", ((float)compressedSize/originalSize)*100);
 
     decode(COMPRESSED_FILENAME, huffmanTree, validBits);
 
