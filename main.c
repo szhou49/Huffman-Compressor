@@ -23,10 +23,16 @@ int main() {
 
     MinHeap* frequencyTable = countFrequency(TOCOMPRESS_FILENAME);
 
+    // for (int i = 0; i < frequencyTable->size; i++) {
+    //     printf("%d\n", frequencyTable->array[i]->freq);
+    // }
+
 
     TreeNode* huffmanTree = buildHuffmanTree(frequencyTable);
 
-    printHuffmanTree(huffmanTree);
+    // printf("%d\n", huffmanTree->freq);
+
+    // printHuffmanTree(huffmanTree);
 
     char** encoded = encode(huffmanTree);
     int validBits = compress(encoded, TOCOMPRESS_FILENAME);
@@ -34,7 +40,7 @@ int main() {
     int originalSize = getFileSize(TOCOMPRESS_FILENAME);
     int compressedSize = getFileSize(COMPRESSED_FILENAME);
 
-    // printf("Compression ratio: %.2f%%\n", ((float)compressedSize/originalSize)*100);
+    printf("Compression ratio: %.2f%%\n", ((float)compressedSize/originalSize)*100);
 
     decode(COMPRESSED_FILENAME, huffmanTree, validBits);
 

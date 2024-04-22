@@ -33,8 +33,7 @@ int compress(char** encoded, char* fileName) {
     char codeBuffer[256] = "";
     
 
-    while (!feof(originalFile)) {
-        fread((char*)&temporaryChar, sizeof(unsigned char), 1, originalFile);
+   while(fread(&temporaryChar, sizeof(unsigned char), 1, originalFile) == 1) {
         // Write the encoded bitstring into buffer
         strcat(codeBuffer, encoded[temporaryChar]);
 
@@ -65,14 +64,14 @@ int compress(char** encoded, char* fileName) {
 
         byte <<= (8 - validBits);
         char* str = byteToBinaryString(byte);
-        printf("Compress last byte: %s\n", str);
+        // printf("Compress last byte: %s\n", str);
         fwrite((char *)&byte, sizeof(unsigned char), 1, compressedFile);
         byteCnt++;
     }
 
     fclose(compressedFile);
-    // printf("Compression finished\n");
-    printf("Compress bytes: %d\n", byteCnt);
+    printf("Compression finished\n");
+    // printf("Compress bytes: %d\n", byteCnt);
     return validBits;
 }
 

@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "structure.h"
 
-FILE* codesFile;
 
 // Build a binary huffman tree
 TreeNode* buildHuffmanTree(MinHeap* minHeap) {
@@ -22,6 +21,7 @@ TreeNode* buildHuffmanTree(MinHeap* minHeap) {
 // Helper function to print the huffman tree
 void printHuffmanTree(TreeNode* root) {
     if (root != NULL) {
+        printf("Node frequency: %d\n", root->freq);
         printHuffmanTree(root->left);
         printHuffmanTree(root->right);
     }
@@ -31,6 +31,15 @@ void printHuffmanTree(TreeNode* root) {
 void dfs(TreeNode* node, char* code, int depth, char** result) {
 
     if (node == NULL) return;
+
+    if (node->left == NULL && node->right == NULL && depth == 0) {
+        code[depth] = '0';
+        code[depth+1] = '\0';
+        result[node->val] = malloc((depth+1)*sizeof(char));
+        printf("%c : %s\n", node->val, code);
+        strcpy(result[node->val], code);
+        return;
+    }
 
     if (node->left == NULL && node->right == NULL) {
         code[depth] = '\0';

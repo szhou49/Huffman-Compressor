@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "structure.h"
 
+#define COMPRESSED_FILENALE "decoded_text.txt"
+
 
 char *byteToString(unsigned char byte) {
     static char binaryString[9]; 
@@ -16,7 +18,7 @@ char *byteToString(unsigned char byte) {
 
 
 void decode(char *filename, TreeNode* huffmanTree, int validBits) {
-    printf("Last byte valid bits: %d\n", validBits);
+    // printf("Last byte valid bits: %d\n", validBits);
     FILE* compressedFile;
     FILE* decoded_text;
 
@@ -27,11 +29,11 @@ void decode(char *filename, TreeNode* huffmanTree, int validBits) {
         exit(EXIT_FAILURE);
     }
 
-    decoded_text = fopen("decoded_text.txt" ,"w");
+    decoded_text = fopen(COMPRESSED_FILENALE,"w");
 
     fseek(compressedFile, 0, SEEK_END);
     long filelen = ftell(compressedFile); // how many bytes
-    printf("Decode bytes: %d\n", filelen);
+    // printf("Decode bytes: %d\n", filelen);
     rewind(compressedFile);
     unsigned char bytes[filelen];
     fread(bytes, sizeof(bytes), 1, compressedFile);
@@ -43,12 +45,13 @@ void decode(char *filename, TreeNode* huffmanTree, int validBits) {
     // Convert Bytes to Bits
 
     int i;
-    /*
+
     if (validBits == 0) {
         for (i = 0; i < 8*filelen; ++i) {
             bits[i] = (bytes[i / 8] >> (7 - (i % 8))) & 1;
         }
     } else {
+        
         for (i = 0; i < 8*(filelen-1); ++i) {
             bits[i] = (bytes[i / 8] >> (7 - (i % 8))) & 1;
         }
@@ -59,35 +62,40 @@ void decode(char *filename, TreeNode* huffmanTree, int validBits) {
             i++;
         }
     }
-    */
-    for (i = 0; i < 8*(filelen - 1); ++i) {
-        bits[i] = (bytes[i / 8] >> (7 - (i % 8))) & 1;
-    }
-    if (validBits > 0) {
-        for (i = 8*(filelen - 1); i < 8*(filelen - 1) + validBits -1; ++i) {
-            bits[i] = (bytes[i / 8] >> (7 - (i % 8))) & 1;
-        }
-    }
+
+    // for (i = 0; i < 8*(filelen - 1); ++i) {
+    //     bits[i] = (bytes[i / 8] >> (7 - (i % 8))) & 1;
+    // }
+    // if (validBits > 0) {
+    //     for (i = 8*(filelen - 1); i < 8*(filelen - 1) + validBits -1; ++i) {
+    //         bits[i] = (bytes[i / 8] >> (7 - (i % 8))) & 1;
+    //     }
+    // }
 
     // printf("%d\n", i);
     // printf("%d\n", 8*(filelen-1)+validBits);
-
-    TreeNode *curr = huffmanTree;
-    for (int j = 0; j < i; ++j) {
-        if (bits[j] == 0) {
-            curr = curr->left;
-        } else {
-            curr = curr->right;
-        }
-        if (curr->left == NULL && curr->right == NULL) {
-            fputc(curr->val, decoded_text);
-            curr = huffmanTree;
+    if (huffmanTree->val != '\0') {
+        fputc(huffmanTree->val, decoded_text);
+    } else {
+        TreeNode *curr = huffmanTree;
+    
+        for (int j = 0; j < i; ++j) {
+            if (bits[j] == 0) {
+                curr = curr->left;
+            } else {
+                curr = curr->right;
+            }
+            if (curr->left == NULL && curr->right == NULL) {
+                fputc(curr->val, decoded_text);
+                curr = huffmanTree;
+            }
         }
     }
+
+    
 
     fclose(decoded_text);
     fclose(compressedFile);
     free(bits); 
-    printf("%u", bytes[filelen - 1]);
-    printf("Decompression finished");
+    printf("Decompression finished, see %s\n", COMPRESSED_FILENALE);
 }
