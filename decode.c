@@ -43,6 +43,7 @@ void decode(char *filename, TreeNode* huffmanTree, int validBits) {
     // Convert Bytes to Bits
 
     int i;
+    /*
     if (validBits == 0) {
         for (i = 0; i < 8*filelen; ++i) {
             bits[i] = (bytes[i / 8] >> (7 - (i % 8))) & 1;
@@ -58,6 +59,16 @@ void decode(char *filename, TreeNode* huffmanTree, int validBits) {
             i++;
         }
     }
+    */
+    for (i = 0; i < 8*(filelen - 1); ++i) {
+        bits[i] = (bytes[i / 8] >> (7 - (i % 8))) & 1;
+    }
+    if (validBits > 0) {
+        for (i = 8*(filelen - 1); i < 8*(filelen - 1) + validBits -1; ++i) {
+            bits[i] = (bytes[i / 8] >> (7 - (i % 8))) & 1;
+        }
+    }
+
     // printf("%d\n", i);
     // printf("%d\n", 8*(filelen-1)+validBits);
 
@@ -77,5 +88,6 @@ void decode(char *filename, TreeNode* huffmanTree, int validBits) {
     fclose(decoded_text);
     fclose(compressedFile);
     free(bits); 
+    printf("%u", bytes[filelen - 1]);
     printf("Decompression finished");
 }
