@@ -16,7 +16,6 @@ char *byteToString(unsigned char byte) {
 
 
 void decode(char *filename, TreeNode* huffmanTree, int validBits) {
-    printf("Last byte valid bits: %d\n", validBits);
     FILE* compressedFile;
     FILE* decoded_text;
 
@@ -27,11 +26,10 @@ void decode(char *filename, TreeNode* huffmanTree, int validBits) {
         exit(EXIT_FAILURE);
     }
 
-    decoded_text = fopen("decoded_text.txt" ,"w");
+    decoded_text = fopen("decoded.txt" ,"w");
 
     fseek(compressedFile, 0, SEEK_END);
     long filelen = ftell(compressedFile); // how many bytes
-    printf("Decode bytes: %d\n", filelen);
     rewind(compressedFile);
     unsigned char bytes[filelen];
     fread(bytes, sizeof(bytes), 1, compressedFile);
@@ -88,6 +86,5 @@ void decode(char *filename, TreeNode* huffmanTree, int validBits) {
     fclose(decoded_text);
     fclose(compressedFile);
     free(bits); 
-    printf("%u", bytes[filelen - 1]);
     printf("Decompression finished");
 }

@@ -89,4 +89,3 @@ TreeNode *top(MinHeap *minHeap) {
     }
     return minHeap -> array[0];
 }
-

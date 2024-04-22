@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define OUTPUT_FILENAME ".compressed"
-int byteCnt = 0;
-
 char *byteToBinaryString(unsigned char byte) {
     static char binaryString[9]; 
     for (int i = 7; i >= 0; --i) {
@@ -15,14 +12,15 @@ char *byteToBinaryString(unsigned char byte) {
     return binaryString;
 }
 
-int compress(char** encoded, char* fileName) {
+int compress(char** encoded, char* fileName, char* compressed) {
     FILE* originalFile;
     FILE* compressedFile;
     char ch;
+    int byteCnt = 0;
 
     originalFile = fopen(fileName, "r");
     
-    compressedFile = fopen(OUTPUT_FILENAME, "wb");
+    compressedFile = fopen(compressed, "wb");
 
     if (originalFile == NULL || compressedFile == NULL) {
         printf("File cannot be opened \n");
@@ -65,14 +63,12 @@ int compress(char** encoded, char* fileName) {
 
         byte <<= (8 - validBits);
         char* str = byteToBinaryString(byte);
-        printf("Compress last byte: %s\n", str);
         fwrite((char *)&byte, sizeof(unsigned char), 1, compressedFile);
         byteCnt++;
     }
 
     fclose(compressedFile);
-    // printf("Compression finished\n");
-    printf("Compress bytes: %d\n", byteCnt);
+    printf("Compression finished\n");
     return validBits;
 }
 
