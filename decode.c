@@ -2,6 +2,19 @@
 #include <stdlib.h>
 #include "structure.h"
 
+
+char *byteToString(unsigned char byte) {
+    static char binaryString[9]; 
+    for (int i = 7; i >= 0; --i) {
+        binaryString[7 - i] = ((byte >> i) & 1) ? '1' : '0';
+    }
+    
+    binaryString[8] = '\0';
+    
+    return binaryString;
+}
+
+
 void decode(char *filename, TreeNode* huffmanTree, int validBits) {
     printf("Last byte valid bits: %d\n", validBits);
     FILE* compressedFile;
@@ -18,10 +31,13 @@ void decode(char *filename, TreeNode* huffmanTree, int validBits) {
 
     fseek(compressedFile, 0, SEEK_END);
     long filelen = ftell(compressedFile); // how many bytes
-    // printf("%d", filelen);
+    printf("Decode bytes: %d\n", filelen);
     rewind(compressedFile);
     unsigned char bytes[filelen];
     fread(bytes, sizeof(bytes), 1, compressedFile);
+
+    // char* lastByteBeforeManipulation = byteToString(bytes[filelen-1]);
+    // printf("lastByte before Manipulation: %s\n", lastByteBeforeManipulation);
 
     char *bits = (char*)malloc(8*filelen*sizeof(char));
     // Convert Bytes to Bits
@@ -35,12 +51,13 @@ void decode(char *filename, TreeNode* huffmanTree, int validBits) {
         for (i = 0; i < 8*(filelen-1); ++i) {
             bits[i] = (bytes[i / 8] >> (7 - (i % 8))) & 1;
         }
-        for (int k = 0; k < validBits; ++k) {
-            bits[i++] = bytes[filelen-1] >> (7 - (k % 8)) & 1;
+        // Handle the last byte
+        for (int k = 0; k < validBits; k++) {
+            bits[i] = bytes[filelen-1] >> (7 - (k % 8)) & 1;
+            // printf("%d\n", bits[i]);
+            i++;
         }
     }
-    
-    bits[i] = '\0'; // Add null terminator
     // printf("%d\n", i);
     // printf("%d\n", 8*(filelen-1)+validBits);
 
@@ -59,5 +76,6 @@ void decode(char *filename, TreeNode* huffmanTree, int validBits) {
 
     fclose(decoded_text);
     fclose(compressedFile);
-    printf("Uncompression finished");
+    free(bits); 
+    printf("Decompression finished");
 }

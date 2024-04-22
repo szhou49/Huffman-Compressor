@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #define OUTPUT_FILENAME ".compressed"
+int byteCnt = 0;
 
 char *byteToBinaryString(unsigned char byte) {
     static char binaryString[9]; 
@@ -39,12 +40,13 @@ int compress(char** encoded, char* fileName) {
 
         // If the buffer size exceed 8,write the 8 bits as a byte into the file
         while (strlen(codeBuffer) >= 8) {
-            unsigned char byte = '\0';
+            unsigned char byte = 0;
             for (int i = 0; i < 8; i++) {
                 byte <<= 1;
                 if (codeBuffer[i] == '1') byte |= 1;
             }
             fwrite((char*)&byte, sizeof(unsigned char), 1, compressedFile);
+            byteCnt++;
             strcpy(codeBuffer, codeBuffer+8);
         }
     }
@@ -62,14 +64,15 @@ int compress(char** encoded, char* fileName) {
         }
 
         byte <<= (8 - validBits);
-        // char* str = byteToBinaryString(byte);
-        // printf("%s\n", str);
+        char* str = byteToBinaryString(byte);
+        printf("Compress last byte: %s\n", str);
         fwrite((char *)&byte, sizeof(unsigned char), 1, compressedFile);
+        byteCnt++;
     }
 
     fclose(compressedFile);
-    printf("Compression finished\n");
-    // printf("%d\n", cnt);
+    // printf("Compression finished\n");
+    printf("Compress bytes: %d\n", byteCnt);
     return validBits;
 }
 
