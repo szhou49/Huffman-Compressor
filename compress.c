@@ -12,7 +12,7 @@ char *byteToBinaryString(unsigned char byte) {
     return binaryString;
 }
 
-int compress(char** encoded, char* fileName, char* compressed) {
+int compress(char** encoded, char* fileName) {
     FILE* originalFile;
     FILE* compressedFile;
     char ch;
@@ -20,7 +20,7 @@ int compress(char** encoded, char* fileName, char* compressed) {
 
     originalFile = fopen(fileName, "r");
     
-    compressedFile = fopen(compressed, "wb");
+    compressedFile = fopen("compressed.bin", "wb");
 
     if (originalFile == NULL || compressedFile == NULL) {
         printf("File cannot be opened \n");
@@ -70,6 +70,4 @@ int compress(char** encoded, char* fileName, char* compressed) {
     printf("Compression finished\n");
     return validBits;
 }
-
-
 

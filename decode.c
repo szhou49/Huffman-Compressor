@@ -2,9 +2,6 @@
 #include <stdlib.h>
 #include "structure.h"
 
-#define COMPRESSED_FILENALE "decoded_text.txt"
-
-
 char *byteToString(unsigned char byte) {
     static char binaryString[9]; 
     for (int i = 7; i >= 0; --i) {
@@ -28,7 +25,7 @@ void decode(char *filename, TreeNode* huffmanTree, int validBits) {
         exit(EXIT_FAILURE);
     }
 
-    decoded_text = fopen("decoded.txt" ,"w");
+    decoded_text = fopen("decoded.txt","w");
 
     fseek(compressedFile, 0, SEEK_END);
     long filelen = ftell(compressedFile); // how many bytes
@@ -73,7 +70,6 @@ void decode(char *filename, TreeNode* huffmanTree, int validBits) {
             }
         }
     }
-
     fclose(decoded_text);
     fclose(compressedFile);
     free(bits); 
