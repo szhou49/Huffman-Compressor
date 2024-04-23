@@ -19,7 +19,6 @@ TreeNode *FileToTree(char *fileName);
 int main() {
     char *filename = (char*)malloc(sizeof(char));
     char *compressed = (char*)malloc(sizeof(char));
-    char *decoded = (char*)malloc(sizeof(char));
 
     printf("Please enter the path of text file to compress.\n");
     scanf("%s", filename);
