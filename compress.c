@@ -71,5 +71,3 @@ int compress(char** encoded, char* fileName, char* compressed) {
     return validBits;
 }
 
-
-
