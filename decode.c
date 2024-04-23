@@ -73,4 +73,5 @@ void decode(char *filename, TreeNode* huffmanTree, int validBits) {
     fclose(decoded_text);
     fclose(compressedFile);
     free(bits); 
+    printf("Decompression finished, see file decoded.txt\n");
 }

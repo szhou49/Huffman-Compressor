@@ -18,7 +18,7 @@ TreeNode *FileToTree(char *fileName);
 
 int main() {
     char *filename = (char*)malloc(sizeof(char));
-    printf("Please enter the path of text file to compress.\n");
+    printf("Please enter the name of text file (including file extension) to compress:\n");
     scanf("%s", filename);
     MinHeap* frequencyTable = countFrequency(filename);
     TreeNode* huffmanTree = buildHuffmanTree(frequencyTable);
