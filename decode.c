@@ -28,16 +28,13 @@ void decode(char *filename, TreeNode* huffmanTree, int validBits) {
         exit(EXIT_FAILURE);
     }
 
-    decoded_text = fopen("decoded" ,"w");
+    decoded_text = fopen("decoded.txt" ,"w");
 
     fseek(compressedFile, 0, SEEK_END);
     long filelen = ftell(compressedFile); // how many bytes
     rewind(compressedFile);
     unsigned char bytes[filelen];
     fread(bytes, sizeof(bytes), 1, compressedFile);
-
-    // char* lastByteBeforeManipulation = byteToString(bytes[filelen-1]);
-    // printf("lastByte before Manipulation: %s\n", lastByteBeforeManipulation);
 
     char *bits = (char*)malloc(8*filelen*sizeof(char));
     // Convert Bytes to Bits
@@ -76,8 +73,6 @@ void decode(char *filename, TreeNode* huffmanTree, int validBits) {
             }
         }
     }
-
-    
 
     fclose(decoded_text);
     fclose(compressedFile);
