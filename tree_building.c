@@ -37,6 +37,13 @@ void dfs(TreeNode* node, char* code, int depth, char** result) {
         code[depth+1] = '\0';
         result[node->val] = malloc((depth+1)*sizeof(char));
         strcpy(result[node->val], code);
+        if (node->val == '\n') {
+            printf("\\n : %s\n", code);
+        } else if (node->val == ' ') {
+            printf("space: %s\n", code);
+        } else {
+            printf("%c : %s\n", node->val, code);
+        }
         return;
     }
 
@@ -45,6 +52,15 @@ void dfs(TreeNode* node, char* code, int depth, char** result) {
         result[node->val] = malloc((depth+1)*sizeof(char));
         if (result[node->val] == NULL) return;
         strcpy(result[node->val], code);
+
+        if (node->val == '\n') {
+            printf("\\n : %s\n", code);
+        } else if (node->val == ' ') {
+            printf("space: %s\n", code);
+        } else {
+            printf("%c : %s\n", node->val, code);
+        }
+        
     }
 
     // assign 0 to the left node
