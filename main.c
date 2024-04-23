@@ -6,43 +6,30 @@
 #include "getFileSize.c"
 #include "decode.c"
 
-
-#define TOCOMPRESS_FILENAME "Original_text.txt"
-#define COMPRESSED_FILENAME ".compressed"
-
 MinHeap* countFrequency(char* filename);
 TreeNode* buildHuffmanTree(MinHeap* minHeap);
 void printHuffmanTree(TreeNode* root);
 char** encode(TreeNode* root);
-int compress(char** encoded, char* fileName);
+int compress(char** encoded, char* fileName, char* compressed);
 long int getFileSize(char* filename);
 void decode(char *filename, TreeNode* huffmanTree, int validBits);
-
+void TreeToFile(TreeNode *root);
+TreeNode *FileToTree(char *fileName);
 
 int main() {
+    char *filename = (char*)malloc(sizeof(char));
+    char *compressed = (char*)malloc(sizeof(char));
+    char *decoded = (char*)malloc(sizeof(char));
 
-    MinHeap* frequencyTable = countFrequency(TOCOMPRESS_FILENAME);
-
-    // for (int i = 0; i < frequencyTable->size; i++) {
-    //     printf("%d\n", frequencyTable->array[i]->freq);
-    // }
-
-
+    printf("Please enter the path of text file to compress.\n");
+    scanf("%s", filename);
+    printf("Please enter the name of compressed file.\n");
+    scanf("%s", compressed);
+    MinHeap* frequencyTable = countFrequency(filename); 
     TreeNode* huffmanTree = buildHuffmanTree(frequencyTable);
-
-    // printf("%d\n", huffmanTree->freq);
-
-    // printHuffmanTree(huffmanTree);
-
     char** encoded = encode(huffmanTree);
-    int validBits = compress(encoded, TOCOMPRESS_FILENAME);
-
-    int originalSize = getFileSize(TOCOMPRESS_FILENAME);
-    int compressedSize = getFileSize(COMPRESSED_FILENAME);
-
-    printf("Compression ratio: %.2f%%\n", ((float)compressedSize/originalSize)*100);
-
-    decode(COMPRESSED_FILENAME, huffmanTree, validBits);
-
+    int validBits = compress(encoded, filename, compressed);
+    printf("Compression ratio: %.2f%%\n", ((float)getFileSize(compressed)/getFileSize(filename))*100);
+    decode(compressed, huffmanTree, 1);
     return 0;
 }

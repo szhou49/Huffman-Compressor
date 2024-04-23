@@ -45,7 +45,6 @@ void dfs(TreeNode* node, char* code, int depth, char** result) {
         code[depth] = '\0';
         result[node->val] = malloc((depth+1)*sizeof(char));
         if (result[node->val] == NULL) return;
-        printf("%c : %s\n", node->val, code);
         strcpy(result[node->val], code);
     }
 
@@ -80,12 +79,6 @@ char** encode(TreeNode* root) {
     dfs(root, code, 0, result);
 
     return result;
-
 }
-
-
-
-
-
 
 
