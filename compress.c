@@ -31,8 +31,7 @@ int compress(char** encoded, char* fileName, char* compressed) {
     char codeBuffer[256] = "";
     
 
-    while (!feof(originalFile)) {
-        fread((char*)&temporaryChar, sizeof(unsigned char), 1, originalFile);
+   while(fread(&temporaryChar, sizeof(unsigned char), 1, originalFile) == 1) {
         // Write the encoded bitstring into buffer
         strcat(codeBuffer, encoded[temporaryChar]);
 
