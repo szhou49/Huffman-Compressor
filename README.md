@@ -1,5 +1,3 @@
-# Huffman Compressor
-
 # Setting Up & Usage
 1. Put the original text .txt file in the SAME directory of our program.
 2. Run the program and enter the full name of the file to be compressed in the terminal.
